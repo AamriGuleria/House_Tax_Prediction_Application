@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Tax Prediction</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <a href="/"><img src="../static/home.png" height="50px" width="50px" alt="Home"/></a>
+        <p color="orange">PropTax</p>
+    </div>
+    <div class="Main-container">
+        <center>
+    <!-- <h1>House Tax</h1> -->
+    <form id="predict">
+            
+                <div class="inputs">
+                    <center>
+                    <div class="input-group">
+                        <label for="crim">Per capita crime rate by town</label>
+                        <input type="number" placeholder="Per capita crime rate by town" id="crim" name="crim" required/>
+                    </div>
+                    <div class="input-group">
+                        <label for="zn">Proportion of large residential lots (over 25,000 sq. ft.)</label>
+                        <input type="number" placeholder="Proportion of large residential lots (over 25,000 sq. ft.)" id="zn" name="zn" required/>
+                    </div>
+                    <div class="input-group">
+                        <label for="indus">Proportion of non-retail business acres per town</label>
+                        <input type="number" placeholder="Proportion of non-retail business acres per town" id="indus" name="indus" required/>
+                    </div>
+                    <div class="input-group">
+                        <label for="chas">Binary variable indicating if the property is near Charles River (1 for yes, 0 for no)</label>
+                        <input type="number" placeholder="Binary variable indicating if the property is near Charles River (1 for yes, 0 for no)" id="chas" name="chas" required/>
+                    </div>
+                    <div class="input-group">
+                        <label for="nox">Concentration of nitrogen oxides in the air</label>
+                        <input type="number" placeholder="nox" id="nox" name="nox" required/>
+                    </div>
+                    <div class="input-group">
+                        <label for="rm">Average number of rooms per dwelling</label>
+                        <input type="number" placeholder="rm" id="rm" name="rm" required/>
+                    </div>
+                    <div class="input-group">
+                        <label for="age">Age</label>
+                        <input type="number" placeholder="Proportion of old owner-occupied units built before 1940" id="age" name="age" required/>
+                    </div>
+                    <div class="input-group">
+                        <label for="dis">Weighted distances to Boston employment centers</label>
+                        <input type="number" placeholder="Weighted distances to Boston employment centers" id="dis" name="dis" required/>
+                    </div>
+                    <div class="input-group">
+                        <label for="rad">Index of accessibility to radial highways</label>
+                        <input type="number" placeholder="Index of accessibility to radial highways" id="rad" name="rad" required/>
+                    </div>
+                    <div class="input-group">
+                        <label for="ptratio">Pupil-teacher ratio by town</label>
+                        <input type="number" placeholder="Pupil-teacher ratio by town" id="ptratio" name="ptratio" required/>
+                    </div>
+                    <div class="input-group">
+                        <label for="b">1000(B^k−0.63)^2 B^k is the proportion of Black residents by town</label>
+                        <input type="number" placeholder="1000(B^k−0.63)^2 B^k is the proportion of Black residents by town" id="b" name="b" required/>
+                    </div>
+                    <div class="input-group">
+                        <label for="lstat">Percentage of lower status of the population</label>
+                        <input type="number" placeholder="Percentage of lower status of the population" id="lstat" name="lstat" required/>
+                    </div>
+                    <div class="input-group">
+                        <label for="medv">Median value of owner-occupied homes in $1000s</label>
+                        <input type="number" placeholder="Median value of owner-occupied homes in $1000s" id="medv" name="medv" required/>
+                    </div>
+                    <button type="button" onclick="makePrediction()"><img src="../static/arrow.png" height="80px" width="80px" alt="predict"/></button>
+                </div>
+            </center>
+            </form>
+            <center>
+            <div id="result">
+                <h1 id="h"></h1>
+            <p id="res"></p>
+        </div>
+        </center>
+        <!-- <button type="button" onclick="makePrediction()">Predict</button> -->
+    <center>
+    <!-- <div id="result"><span></span></div> -->
+    </center>
+    <script>
+        function makePrediction(){
+            
+        const features = {
+            crim: document.getElementById('crim').value,
+            zn: document.getElementById('zn').value,
+            indus: document.getElementById('indus').value,
+            chas: document.getElementById('chas').value,
+            nox: document.getElementById('nox').value,
+            rm: document.getElementById('rm').value,
+            age: document.getElementById('age').value,
+            dis: document.getElementById('dis').value,
+            rad: document.getElementById('rad').value,
+            ptratio: document.getElementById('ptratio').value,
+            b: document.getElementById('b').value,
+            lstat: document.getElementById('lstat').value
+            ,medv: document.getElementById('medv').value
+        };
+        console.log(features)
+        fetch('/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(features)
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data)
+            if(data!==undefined  && data!==null && data.length!==0 && data.error===undefined){
+            console.log(data)
+            document.getElementById('res').textContent+=data.prediction
+            document.getElementById('h').textContent="Predicted Value"
+            document.getElementById('predict').style.display = 'none';
+            }
+            
+        }).catch(error=>console.log(error))
+    }
+    </script>
+    </center>
+    </div>
+</body>
+</html>
