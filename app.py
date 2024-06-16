@@ -29,6 +29,7 @@ def MainPage():
 
 @app.route('/predict',methods=['POST'])
 def predict():
+    #perdicts tax per 10,000 dollars
     data = request.get_json(force=True)
     try:
         
