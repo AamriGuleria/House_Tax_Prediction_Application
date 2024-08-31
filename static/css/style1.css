@@ -7,17 +7,12 @@ body{
     height:100%;
     width:100%;
     margin: 0;
-    /* justify-content:center;
-    display: flex; 
-    align-items: center;
-    margin:0; */
 }
 .Home p{
     font-family: monospace;
     color:gray;
 }
 .navbar a{
-    /* transform: translateY(30%); */
     margin-top:1%;
     margin-bottom:1%;
     margin-left:0.5%;
@@ -113,13 +108,6 @@ body{
     margin-top:15%;
     width:100%;
     background-color: black;
-}
-#predict .inputs {
-    /* padding-top: 5%;
-    display: grid;
-    grid-template-rows: 2fr 2fr; */
-    /* gap: 15px; */
-    /* flex-wrap: wrap; */
 }
 .inputs input{
     width: 40%;
