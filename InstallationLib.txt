@@ -4,3 +4,4 @@ seaborn
 matplotlib
 scikit-learn
 gunicorn
+Flask==2.0.1
